@@ -1,0 +1,216 @@
+/* --- ESTILOS GENERALES Y BLINDAJE MOBILE --- */
+html, body {
+    height: 100%;
+    height: 100dvh; 
+    margin: 0; 
+    padding: 0; 
+    background: #050505; 
+    color: white; 
+    font-family: 'Courier New', Courier, monospace; 
+    overflow: hidden; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    touch-action: none; 
+    user-select: none; 
+    -webkit-user-select: none;
+}
+
+#game-outer-container { 
+    position: relative; 
+    width: 100vw; 
+    height: 100%; 
+    height: 100dvh; 
+    background: black; 
+    display: none; 
+    flex-direction: column; 
+}
+
+@media (min-width: 800px) {
+    #game-outer-container {
+        max-width: 800px;
+        height: 100%;
+        max-height: 750px;
+        border: 4px solid #333; 
+        border-radius: 12px; 
+        box-shadow: 0 0 30px rgba(0,255,255,0.2); 
+    }
+}
+
+#canvas-container { 
+    position: relative; 
+    flex: 1 1 auto; 
+    min-height: 0; 
+    background-color: #050505;
+    background-image: 
+        radial-gradient(white, rgba(255,255,255,.2) 1px, transparent 30px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 20px),
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+    background-size: 550px 550px, 350px 350px, 250px 250px;
+    background-position: 0 0, 40px 60px, 130px 270px;
+    overflow: hidden;
+}
+
+canvas { display: block; width: 100%; height: 100%; cursor: crosshair; }
+
+/* --- PANTALLAS --- */
+#start-screen { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(10, 10, 20, 0.95); display: flex; flex-direction: column; 
+    justify-content: center; align-items: center; z-index: 100; text-align: center; 
+    color: #00ffff; padding: 20px; box-sizing: border-box; overflow-y: auto;
+}
+#start-screen h1 { font-size: clamp(28px, 5vw, 40px); text-shadow: 0 0 10px #00ffff; margin-bottom: 10px; }
+.instructions { background: #111; padding: 15px; border-radius: 8px; border: 1px solid #333; margin-bottom: 15px; color: #00ff00; text-align: left; font-size: clamp(14px, 3vw, 16px); max-width: 100%;}
+
+.ranking-container { background: #222; padding: 10px; border-radius: 8px; border: 1px solid #ffd700; margin-bottom: 15px; width: 100%; max-width: 350px; color: white;}
+.ranking-container h3 { margin: 0 0 10px 0; color: #ffd700; text-transform: uppercase; font-size: 16px; text-shadow: 0 0 5px #ffd700;}
+.ranking-list { list-style: none; padding: 0; margin: 0; text-align: left; font-size: 14px; }
+.ranking-list li { padding: 4px 0; border-bottom: 1px dashed #444; display: flex; justify-content: space-between; }
+.ranking-list li:last-child { border-bottom: none; }
+.rank-name { color: #00ffff; font-weight: bold; }
+.rank-score { color: #00ff00; }
+
+#player-name-input { 
+    background: rgba(255,255,255,0.1); border: 2px solid #00ffff; color: #00ffff; 
+    padding: 12px; font-size: 20px; border-radius: 8px; text-align: center; 
+    margin-bottom: 15px; width: 100%; max-width: 300px; outline: none; 
+}
+#start-button { 
+    background: #00ff00; color: black; border: none; padding: 12px 30px; 
+    font-size: clamp(18px, 4vw, 22px); font-weight: bold; border-radius: 8px; cursor: pointer; 
+}
+#btn-clear-ranking { background: transparent; color: #666; border: 1px solid #444; padding: 5px 10px; font-size: 12px; margin-top: 15px; cursor: pointer; border-radius: 4px; }
+
+#game-over-overlay { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(10, 10, 10, 0.95); display: none; flex-direction: column; 
+    justify-content: flex-start; align-items: center; z-index: 90; color: white; 
+    text-align: center; padding-top: 20px; overflow-y: auto;
+}
+#game-over-overlay h2 { font-size: 40px; color: #ff3333; margin: 0; text-shadow: 0 0 20px black; }
+#final-score { font-size: 20px; margin: 10px 0; color: #00ffff; }
+
+.results-wrapper { display: flex; flex-direction: column; gap: 15px; width: 90%; max-width: 500px; margin-bottom: 20px; align-items: center; }
+#factorization-results { background: #222; padding: 15px; border-radius: 8px; border: 1px solid #444; width: 100%; font-size: 14px; text-align: left; box-sizing: border-box;}
+
+.buttons-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 30px; padding: 0 10px; width: 100%; max-width: 500px;}
+.action-button { padding: 12px 15px; font-size: 16px; font-weight: bold; border-radius:5px; cursor:pointer; border: none; flex: 1; min-width: 130px;}
+.btn-restart { background: white; color: black; }
+.btn-print { background: #00ff00; color: black; }
+
+/* --- PANEL DE CONTROL TÁCTIL --- */
+#control-panel { 
+    background: #111; 
+    border-top: 2px solid #333; 
+    display: flex; 
+    flex-direction: column; 
+    padding: 5px 8px; 
+    box-sizing: border-box; 
+    gap: 5px; 
+    flex: 0 0 auto; 
+}
+
+.hud-row { 
+    display: flex; 
+    justify-content: space-between; 
+    width: 100%; 
+    padding: 0 5px;
+    box-sizing: border-box;
+}
+.hud-item { display: flex; flex-direction: row; gap: 4px; align-items: baseline; color: #aaa; font-size: 11px; } 
+.hud-value { font-size: 13px; font-weight: bold; color: white; }
+#player-name-display { color: #00ffff; }
+#lives-display { letter-spacing: -2px; } 
+
+#mobile-input-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 6px; 
+    width: 100%;
+}
+
+#custom-display {
+    background: #222;
+    border: 2px solid #555;
+    color: #00ff00;
+    font-size: 22px; 
+    width: 55px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: inset 0 0 10px black;
+    flex-shrink: 0;
+}
+.display-active { border-color: #00ff00 !important; background: #001100 !important;}
+
+#custom-numpad {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); 
+    grid-template-rows: repeat(2, 1fr);    
+    gap: 4px; 
+    flex-grow: 1;
+}
+
+#custom-numpad button {
+    background: #333;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 6px 0; 
+    font-size: 16px; 
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+#custom-numpad button:active { background: #666; transform: scale(0.95); }
+
+.btn-clear { background: #ff9900 !important; color: black !important; border-color: #cc7a00 !important;}
+.btn-shoot { background: #ff3333 !important; color: white !important; border-color: #cc0000 !important;}
+
+/* AJUSTES PARA COMPUTADORA: Teclado más compacto */
+@media (min-width: 600px) {
+    #control-panel { flex-direction: column; padding: 10px 15px; gap: 8px; }
+    .hud-item { font-size: 14px; }
+    .hud-value { font-size: 18px; }
+    #custom-display { width: 80px; font-size: 28px; }
+    #custom-numpad { gap: 5px; }
+    #custom-numpad button { font-size: 18px; padding: 8px 0; border-radius: 6px; }
+    .results-wrapper { flex-direction: row; align-items: stretch; justify-content: center; }
+}
+
+
+/* --- SOLUCIÓN DE MENSAJES (Pegados arriba) --- */
+#message-area { 
+    position: absolute; 
+    top: 20px; /* Lo pegamos al techo de la pantalla */
+    left: 50%; 
+    transform: translateX(-50%); /* Solo centrado horizontal */
+    color: #ff3333; 
+    font-weight: bold; 
+    font-size: clamp(16px, 5vw, 22px); 
+    text-align: center; 
+    pointer-events: none; 
+    /* Contorno negro duro para lectura impecable */
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 0 10px black; 
+    width: 90%;
+    z-index: 50;
+}
+
+/* --- PDF EXPORT --- */
+#print-area { display: none; }
+@media print {
+    body * { visibility: hidden; display: none !important; }
+    html, body { background: white; color: black; height: auto; margin: 0; padding: 0; overflow: auto; }
+    #print-area { display: block !important; visibility: visible; position: absolute; top: 0; left: 0; width: 100%; font-family: Arial, sans-serif; padding: 20px; box-sizing: border-box; }
+    #print-area * { display: block !important; visibility: visible; }
+    #print-area h1 { color: #333; border-bottom: 2px solid #333; padding-bottom: 10px; }
+    #print-area ul { list-style-type: none; padding-left: 0; }
+    #print-area li { margin-bottom: 10px; font-size: 18px; border-bottom: 1px dashed #ccc; padding-bottom: 5px; }
+    #print-area sup { display: inline !important; }
+}

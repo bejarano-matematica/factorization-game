@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DivisorX</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="start-screen">
+    <h1>DivisorX</h1>
+    <div class="ranking-container">
+        <h3>🏆 Mejores Pilotos 🏆</h3>
+        <ul class="ranking-list" id="start-ranking-list"></ul>
+    </div>
+    <div class="instructions">
+        1. 🖱️/👆 <b>Toca</b> un asteroide para apuntar.<br>
+        2. 🔢 Usa el panel táctil para ingresar un número <b>primo</b>.<br>
+        3. 💥 Dispara hasta que llegue a 1.<br>
+        <span style="color:#ff3333;">⚠️ Números compuestos restan 1 vida.</span>
+    </div>
+    <label for="player-name-input">¿Piloto?</label>
+    <input type="text" id="player-name-input" placeholder="Tu nombre..." maxlength="12">
+    <button id="start-button">Despegar</button>
+    <button id="btn-clear-ranking" onclick="clearRanking()">Borrar Historial</button>
+</div>
+
+<div id="game-outer-container">
+    <div id="canvas-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="message-area"></div>
+        
+        <div id="game-over-overlay">
+            <h2>FIN DEL JUEGO</h2>
+            <div id="final-score"></div>
+            <div class="results-wrapper">
+                <div id="factorization-results"></div>
+                <div class="ranking-container" style="margin-bottom: 0;">
+                    <h3>🏆 Top 5 Histórico 🏆</h3>
+                    <ul class="ranking-list" id="end-ranking-list"></ul>
+                </div>
+            </div>
+            <div class="buttons-container">
+                <button class="action-button btn-restart" onclick="goToStartScreen()">Volver al Inicio</button>
+                <button class="action-button btn-print" onclick="window.print()">Guardar PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="control-panel">
+        <div class="hud-row">
+            <div class="hud-item"><span>Piloto:</span><span id="player-name-display" class="hud-value">---</span></div>
+            <div class="hud-item"><span>Pts:</span><span id="score-display" class="hud-value">0</span></div>
+            <div class="hud-item"><span>Nv:</span><span id="level-display" class="hud-value">1</span></div>
+            <div class="hud-item"><span id="lives-display" class="hud-value" style="color: #ff3333;">❤️ ❤️ ❤️</span></div>
+        </div>
+        
+        <div id="mobile-input-section">
+            <div id="custom-display">?</div>
+            <div id="custom-numpad">
+                <button onclick="typeNum('1')">1</button>
+                <button onclick="typeNum('2')">2</button>
+                <button onclick="typeNum('3')">3</button>
+                <button onclick="typeNum('4')">4</button>
+                <button onclick="typeNum('5')">5</button>
+                <button class="btn-clear" onclick="clearNum()">C</button>
+                
+                <button onclick="typeNum('6')">6</button>
+                <button onclick="typeNum('7')">7</button>
+                <button onclick="typeNum('8')">8</button>
+                <button onclick="typeNum('9')">9</button>
+                <button onclick="typeNum('0')">0</button>
+                <button class="btn-shoot" onclick="handleShoot()">🔥</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="print-area"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
