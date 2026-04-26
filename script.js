@@ -234,6 +234,9 @@ function startGame() {
     updateHUD();
     lastSpawnTime = 0; 
     gameLoop();
+    if (window.AppInventor) {
+    window.AppInventor.setWebViewString("inicio");
+}
 }
 
 function goToStartScreen() {
@@ -347,18 +350,21 @@ function handleShoot() {
     if (isNaN(divisor)) {
         playSound('error');
         showMessage("Ingresa un número", false);
+        if (window.AppInventor) window.AppInventor.setWebViewString("error");
         return;
     }
 
     if (divisor === 1) {
         playSound('error');
         showMessage("El 1 no es primo ni compuesto. ¡Intenta con otro!", false);
+        if (window.AppInventor) window.AppInventor.setWebViewString("error");
         return; 
     }
 
     if (!selectedAsteroid || !asteroids.includes(selectedAsteroid)) {
         playSound('error');
         showMessage("¡Toca un asteroide para apuntar!", false);
+        if (window.AppInventor) window.AppInventor.setWebViewString("error");
         return;
     }
     
@@ -367,6 +373,8 @@ function handleShoot() {
         updateHUD();
         playSound('error');
         showMessage(`¡Error! ${divisor} es COMPUESTO. Pierdes 1 vida.`, false);
+        if (window.AppInventor) window.AppInventor.setWebViewString("error");
+        
         canvas.style.filter = "brightness(50%) sepia(1) hue-rotate(-50deg) saturate(500%)";
         setTimeout(() => canvas.style.filter = "none", 200);
         if (lives <= 0) {
@@ -400,19 +408,25 @@ function handleShoot() {
             selectedAsteroid = null; 
             score += 100 * level; 
             showMessage("¡Asteroide Destruido!", true);
+            if (window.AppInventor) {
+                window.AppInventor.setWebViewString("destruido");
+            }
             checkLevelUp();
         } else {
             playSound('hit');
             showMessage("¡División exitosa!", true);
+            if (window.AppInventor) {
+                window.AppInventor.setWebViewString("acierto");
+            }
         }
     } else {
-        // --- NUEVA LÓGICA: DIVISOR ERRÓNEO RESTA VIDA ---
+        // --- DIVISOR ERRÓNEO ---
         lives--;
         updateHUD();
         playSound('error');
         showMessage(`¡Error! ${divisor} no es divisor de ${targetAsteroid.number}.`, false);
+        if (window.AppInventor) window.AppInventor.setWebViewString("error");
         
-        // Efecto visual de daño
         canvas.style.filter = "brightness(50%) sepia(1) hue-rotate(-50deg) saturate(500%)";
         setTimeout(() => canvas.style.filter = "none", 200);
         
@@ -431,6 +445,11 @@ function checkLevelUp() {
         asteroidSpawnRate = Math.max(4000, asteroidSpawnRate - 300); 
         playSound('levelUp');
         showMessage(`¡NIVEL ${level}!`, true);
+        
+        // Lo metimos ADENTRO del if, para que solo avise cuando sube de nivel
+        if (window.AppInventor) {
+            window.AppInventor.setWebViewString("nivel_" + level);
+        }
     }
 }
 
